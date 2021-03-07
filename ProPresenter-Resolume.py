@@ -157,6 +157,8 @@ class ProPResolume():
         text = text.strip()
         text = text.replace('\x00', ' ')
         
+        text = text.upper()
+        
         if text == "":
             text = " "
 
