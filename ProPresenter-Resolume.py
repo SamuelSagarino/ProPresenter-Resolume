@@ -31,12 +31,12 @@ class ProPResolume():
     Resolume_TextMatches = []
     Resolume_TextBoxStartOSCPaths = []
     Resolume_TextBoxReleaseOSCPaths = []
-    
+
     # Allow splitting the text at a certain delimiter
     splitLinesChar = None
 
     NextRelease = None
-    
+
     lastText = ""
 
     # Do we need to attempt a reconnection?
@@ -73,13 +73,13 @@ class ProPResolume():
 
             if 'TextMatchTriggers' in ConfigData:
                 self.Resolume_TextMatches = ConfigData['TextMatchTriggers']
-                
+
             if 'Resolume_TextBoxReleaseOSCPaths' in ConfigData:
                 self.Resolume_TextBoxReleaseOSCPaths = ConfigData['Resolume_TextBoxReleaseOSCPaths']
-            
+
             if 'Resolume_TextBoxStartOSCPaths' in ConfigData:
                 self.Resolume_TextBoxStartOSCPaths = ConfigData['Resolume_TextBoxStartOSCPaths']
-            
+
             if "SplitLines" in ConfigData:
                 self.splitLinesChar = ConfigData['SplitLines']
 
@@ -108,7 +108,7 @@ class ProPResolume():
         self.ProPresenter.addSubscription("ConnectionFailed", self.connectFailed)
         self.ProPresenter.addSubscription("Disconnected", self.disconnected)
         self.ProPresenter.start()
-    
+
     def connectResolume(self):
         self.Resolume = udp_client.SimpleUDPClient(self.Resolume_IPAddress, self.Resolume_IPPort)
 
@@ -140,11 +140,11 @@ class ProPResolume():
 
     def updateSlideTextCurrent(self, data):
         # Update the text label for the current slide
-        
+
         if self.splitLinesChar is not None and data['text'] is not None and self.splitLinesChar in data['text']:
             data['text'] = data['text'].split(self.splitLinesChar)
             data['text'] = data['text'][0]
-        
+
         if data['text'] is not None:
             self.resolumeSendText(data['text'].encode('utf-8'))
         else:
@@ -153,12 +153,10 @@ class ProPResolume():
     def resolumeSendText(self, text):
         if type(text) is bytes:
             text = text.decode().strip(' \t\r\n\0')
-        
         text = text.strip()
         text = text.replace('\x00', ' ')
-        
         text = text.upper()
-        
+
         if text == "":
             text = " "
 
@@ -166,20 +164,20 @@ class ProPResolume():
                 # Allow releasing the clip when it's not in use (to trigger a fade out)
                 self.Resolume.send_message(path, 1)
 
-        elif text != self.lastText:
+        if text != self.lastText:
             for path in self.Resolume_TextBoxStartOSCPaths:
                 # Allow starting the clip when it's in use
                 self.Resolume.send_message(path, 1)
-        
-        self.lastText = text.upper()
-        
+
+        self.lastText = text
+
         for path in self.Resolume_TextBoxOSCPaths:
             try:
                 print("Sending text:", text)
                 self.Resolume.send_message(path, text)
             except Exception as e:
                 print("EXCEPTION while sending text!", e)
-        
+
         foundMatch = False
 
         for match in self.Resolume_TextMatches:
@@ -202,21 +200,21 @@ class ProPResolume():
 
                 if 'CommandReleased' in match:
                     self.NextRelease = match['CommandReleased']
-                
+
                 break
-        
+
         if foundMatch is False and self.NextRelease is not None:
             for command in self.NextRelease:
                 if len(command) > 1:
                     args = command[1:]
                 else:
                     args = [True]
-                
+
                 print(command)
                 self.Resolume.send_message(command[0], *args)
-            
+
             self.NextRelease = None
-            
+
 
     def close(self):
         # Terminate the application

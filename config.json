@@ -1,0 +1,39 @@
+{
+    "ProP_IPAddress": "192.168.6.19",
+    "ProP_IPPort": 60119,
+    "ProP_Password": "password",
+
+    "Resolume_IPAddress": "192.168.6.103",
+    "Resolume_IPPort": 7000,
+    "Resolume_TextBoxOSCPaths": [
+        "/composition/layers/2/clips/5/video/source/blocktextgenerator/text/params/lines"
+    ],
+    "Resolume_TextBoxReleaseOSCPaths": [
+        "/composition/layers/2/clips/1/connect"
+    ],
+    "Resolume_TextBoxStartOSCPaths": [
+        "/composition/layers/2/clips/5/connect"
+    ],
+
+    "TextMatchTriggers": [
+        {
+            "Text": "Heaven thundered",
+            "Commands": [
+                ["/composition/layers/1/clips/1/connect"]
+            ]
+        },
+        {
+            "Text": "Unstoppable God",
+            "Commands": [
+                ["/composition/layers/2/clips/4/video/source/params/scale", 0.04],
+                ["/composition/layers/2/clips/4/video/source/params/text", "UNSTOPPABLE GOD"],
+                ["/composition/layers/2/clips/4/connect"]
+            ],
+            "CommandReleased": [
+                ["/composition/layers/2/clear"],
+                ["/composition/layers/1/clips/1/connect"]
+            ]
+        }
+
+    ]
+}
