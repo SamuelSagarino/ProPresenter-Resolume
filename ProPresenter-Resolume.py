@@ -9,7 +9,7 @@ from pythonosc import udp_client
 
 __author__ = "Anthony Eden"
 __copyright__ = "Copyright 2017, Anthony Eden / Media Realm"
-__credits__ = ["Anthony Eden"]
+__credits__ = ["Anthony Eden, Samuel Sagarino"]
 __license__ = "GPL"
 __version__ = "0.1"
 
