@@ -171,7 +171,7 @@ class ProPResolume():
                 # Allow starting the clip when it's in use
                 self.Resolume.send_message(path, 1)
         
-        self.lastText = text
+        self.lastText = text.upper()
         
         for path in self.Resolume_TextBoxOSCPaths:
             try:
