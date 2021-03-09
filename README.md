@@ -1,6 +1,6 @@
 # ProPresenter-Resolume
 
-Fork of `anthonyeden/ProPresenter-Resolume` 
+Fork of @anthonyeden `ProPresenter-Resolume` 
 
 Implemented at Real Life Christian Church in Clermont, FL
 
