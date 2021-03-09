@@ -1,2 +1,4 @@
 # ProPresenter-Resolume
-Takes the Lyrics XML Feed from ProPresenter, and sends it via OSC to to Resolume 6's Text Generator.
+Fork of `anthonyeden/ProPresenter-Resolume` 
+Implemented at Real Life Christian Church in Clermont, FL
+Fetch lyrics and text from networked ProPresenter Stage Display and send via OSC to Resolume Arena 7.
