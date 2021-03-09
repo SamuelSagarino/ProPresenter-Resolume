@@ -169,14 +169,14 @@ class ProPResolume():
                 # Allow starting the clip when it's in use
                 self.Resolume.send_message(path, 1)
 
-        self.lastText = text
-
-        for path in self.Resolume_TextBoxOSCPaths:
-            try:
-                print("Sending text:", text)
-                self.Resolume.send_message(path, text)
-            except Exception as e:
-                print("EXCEPTION while sending text!", e)
+        if text != self.lastText:
+            for path in self.Resolume_TextBoxOSCPaths:
+                try:
+                    print("Sending text:", text)
+                    self.Resolume.send_message(path, text)
+                    self.lastText = text
+                except Exception as e:
+                    print("EXCEPTION while sending text!", e)
 
         foundMatch = False
 
